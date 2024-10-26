@@ -1,10 +1,10 @@
 package user_service_test
 
 import (
-	"strings"
 	"testing"
 
 	user_service "github.com/luizrgf2/chat_real_time_go/internal/user/services"
+	assert "github.com/stretchr/testify/assert"
 )
 
 func TestCreateValidUser(t *testing.T) {
@@ -13,9 +13,8 @@ func TestCreateValidUser(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	if user.Name != "Luiz" {
-		t.Fatal("Error name expected", "Luiz")
-	}
+	assert.Nil(t, err)
+	assert.Equal(t, "Luiz", user.Name)
 }
 
 func TestCreateInvalidUserWithInvalidName(t *testing.T) {
@@ -24,7 +23,6 @@ func TestCreateInvalidUserWithInvalidName(t *testing.T) {
 	if user != nil {
 		t.Error(err)
 	}
-	if !strings.Contains(err.Error(), "Name: the length must be between 3 and 50") {
-		t.Error("Error expected", "Name: the length must be between 3 and 50", "error finded", err.Error())
-	}
+
+	assert.Contains(t, err.Error(), "Name: the length must be between 3 and 50")
 }

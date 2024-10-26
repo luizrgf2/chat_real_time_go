@@ -11,11 +11,11 @@ import (
 )
 
 type CreateUserUseCase struct {
-	userRepo user_interfaces_repo.IUserRepository
+	UserRepo user_interfaces_repo.IUserRepository
 }
 
 func (c *CreateUserUseCase) checkIfUserExists(userName string) error {
-	user, err := c.userRepo.FindByName(userName)
+	user, err := c.UserRepo.FindByName(userName)
 	if err != nil {
 		if errors.Is(err, user_errors.ErrUserNotExists) {
 			return nil
@@ -29,7 +29,7 @@ func (c *CreateUserUseCase) checkIfUserExists(userName string) error {
 }
 
 func (c *CreateUserUseCase) saveUser(userData user_entity.UserEntity) (*user_entity.UserEntity, error) {
-	userSaved, err := c.userRepo.Create(&userData)
+	userSaved, err := c.UserRepo.Create(&userData)
 	if err != nil {
 		return nil, err
 	}
